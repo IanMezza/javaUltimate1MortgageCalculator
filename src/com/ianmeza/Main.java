@@ -6,7 +6,6 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
-        NumberFormat currency = NumberFormat.getCurrencyInstance();
 
 //        read the inputs
         int principal = (int) readNumber("Principal ($1K - $1M): ", 1000, 1_000_000);
@@ -16,11 +15,42 @@ public class Main {
 //        make calculation
         double mortgage = calculateMortgage(principal, annualInterestRate, numberOfYears);
 
+        displayMortgage(mortgage);
+        displayPaymentSchedule(mortgage, principal, annualInterestRate, numberOfYears);
+    }
+
+    public static void displayPaymentSchedule(double mortgage, double principal, float annualInterestRate, int numberOfYears) {
+        int p = 1;
+        NumberFormat currency = NumberFormat.getCurrencyInstance();
+//        format currency
+        String formattedMortgage = currency.format(mortgage);
+//        print result
+        System.out.println("PAYMENT SCHEDULE");
+        System.out.println("________________");
+        while (p <= numberOfYears * 12) {
+            System.out.println(currency.format(calculateRemainingBalance(principal, annualInterestRate, numberOfYears, p)));
+            p ++;
+        }
+    }
+
+    public static double calculateRemainingBalance(double principal, float annualInterestRate, int numberOfYears, int currentMonth) {
+        final int MONTHS_IN_A_YEAR = 12;
+        final int PERCENTAGE = 100;
+
+        int numberOfMonths = numberOfYears * MONTHS_IN_A_YEAR;
+        float monthlyInterestRate = (annualInterestRate / PERCENTAGE) / MONTHS_IN_A_YEAR;
+        return (principal * (Math.pow((1 + monthlyInterestRate), numberOfMonths) - Math.pow((1 + monthlyInterestRate), currentMonth))) / (Math.pow((1 + monthlyInterestRate), numberOfMonths) - 1);
+    }
+
+    public static void displayMortgage(double mortgage) {
+        NumberFormat currency = NumberFormat.getCurrencyInstance();
 //        format currency
         String formattedMortgage = currency.format(mortgage);
 //        print result
 
-        System.out.println("Mortgage: " + formattedMortgage);
+        System.out.println("MORTGAGE");
+        System.out.println("________");
+        System.out.println("Monthly Payments: " + formattedMortgage);
     }
 
     public static double readNumber(String prompt, double min, double max) {
