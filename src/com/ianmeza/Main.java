@@ -9,9 +9,6 @@ public class Main {
         NumberFormat currency = NumberFormat.getCurrencyInstance();
         Scanner scanner = new Scanner(System.in);
 
-        final int MONTHS_IN_A_YEAR = 12;
-        final int PERCENTAGE = 100;
-
         int principal;
         float annualInterestRate;
         int numberOfYears;
@@ -41,7 +38,7 @@ public class Main {
         while (true) {
             System.out.print("Period (Years): ");
             numberOfYears = scanner.nextInt();
-            numberOfMonths = numberOfYears * MONTHS_IN_A_YEAR;
+
 
             if (numberOfYears > 0 && numberOfYears<= 30) {
                 break;
@@ -50,13 +47,28 @@ public class Main {
             System.out.println("Enter a value between 1 and 30");
         }
 //        make calculation
-        float monthlyInterestRate = (annualInterestRate / PERCENTAGE) / MONTHS_IN_A_YEAR;
-        double onePlusRFactor = Math.pow((1 + monthlyInterestRate), numberOfMonths);
-        double mortgage = principal * ((monthlyInterestRate * onePlusRFactor)/(onePlusRFactor - 1));
+        double mortgage = calculateMortgage(principal, annualInterestRate, numberOfYears);
+
 //        format currency
         String formattedMortgage = currency.format(mortgage);
 //        print result
 
         System.out.println("Mortgage: " + formattedMortgage);
+    }
+
+    public static double calculateMortgage(
+            int principal,
+            float annualInterestRate,
+            int numberOfYears) {
+
+        final int MONTHS_IN_A_YEAR = 12;
+        final int PERCENTAGE = 100;
+
+        int numberOfMonths = numberOfYears * MONTHS_IN_A_YEAR;
+        float monthlyInterestRate = (annualInterestRate / PERCENTAGE) / MONTHS_IN_A_YEAR;
+        double onePlusRFactor = Math.pow((1 + monthlyInterestRate), numberOfMonths);
+
+        double mortgage = principal * ((monthlyInterestRate * onePlusRFactor)/(onePlusRFactor - 1));
+        return mortgage;
     }
 }
