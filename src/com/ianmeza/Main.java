@@ -4,6 +4,8 @@ import java.text.NumberFormat;
 import java.util.Scanner;
 
 public class Main {
+    final static int MONTHS_IN_A_YEAR = 12;
+    final static int PERCENTAGE = 100;
 
     public static void main(String[] args) {
 
@@ -27,20 +29,13 @@ public class Main {
 //        print result
         System.out.println("PAYMENT SCHEDULE");
         System.out.println("________________");
-        while (p <= numberOfYears * 12) {
+        while (p <= numberOfYears * MONTHS_IN_A_YEAR) {
             System.out.println(currency.format(calculateRemainingBalance(principal, annualInterestRate, numberOfYears, p)));
             p ++;
         }
     }
 
-    public static double calculateRemainingBalance(double principal, float annualInterestRate, int numberOfYears, int currentMonth) {
-        final int MONTHS_IN_A_YEAR = 12;
-        final int PERCENTAGE = 100;
 
-        int numberOfMonths = numberOfYears * MONTHS_IN_A_YEAR;
-        float monthlyInterestRate = (annualInterestRate / PERCENTAGE) / MONTHS_IN_A_YEAR;
-        return (principal * (Math.pow((1 + monthlyInterestRate), numberOfMonths) - Math.pow((1 + monthlyInterestRate), currentMonth))) / (Math.pow((1 + monthlyInterestRate), numberOfMonths) - 1);
-    }
 
     public static void displayMortgage(double mortgage) {
         NumberFormat currency = NumberFormat.getCurrencyInstance();
@@ -67,14 +62,17 @@ public class Main {
         }
         return value;
     }
+    public static double calculateRemainingBalance(double principal, float annualInterestRate, int numberOfYears, int currentMonth) {
+        int numberOfMonths = numberOfYears * MONTHS_IN_A_YEAR;
+        float monthlyInterestRate = (annualInterestRate / PERCENTAGE) / MONTHS_IN_A_YEAR;
+
+        return (principal * (Math.pow((1 + monthlyInterestRate), numberOfMonths) - Math.pow((1 + monthlyInterestRate), currentMonth))) / (Math.pow((1 + monthlyInterestRate), numberOfMonths) - 1);
+    }
 
     public static double calculateMortgage(
             int principal,
             float annualInterestRate,
             int numberOfYears) {
-
-        final int MONTHS_IN_A_YEAR = 12;
-        final int PERCENTAGE = 100;
 
         int numberOfMonths = numberOfYears * MONTHS_IN_A_YEAR;
         float monthlyInterestRate = (annualInterestRate / PERCENTAGE) / MONTHS_IN_A_YEAR;
