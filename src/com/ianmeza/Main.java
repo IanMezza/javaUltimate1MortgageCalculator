@@ -8,29 +8,30 @@ public class Main {
     final static int PERCENTAGE = 100;
 
     public static void main(String[] args) {
+        // TODO: 17/02/22 Console Class
+        // TODO: 17/02/22 MortgageReport Class
 
 //        read the inputs
         int principal = (int) readNumber("Principal ($1K - $1M): ", 1000, 1_000_000);
         float annualInterestRate = (float) readNumber("Annual Interest Rate: ", 0, 30);
         int numberOfYears = (int) readNumber("Period (Years): ", 0, 30);
 
+        var mortgageCalculator = new MortgageCalculator(1000, 1_000_000, 0, 30, 0, 30, principal, annualInterestRate, numberOfYears);
 //        make calculation
-        double mortgage = calculateMortgage(principal, annualInterestRate, numberOfYears);
+        double mortgage = mortgageCalculator.getMortgage();
 
         displayMortgage(mortgage);
-        displayPaymentSchedule(mortgage, principal, annualInterestRate, numberOfYears);
+        displayPaymentSchedule(mortgageCalculator, numberOfYears);
     }
 
-    public static void displayPaymentSchedule(double mortgage, double principal, float annualInterestRate, int numberOfYears) {
+    public static void displayPaymentSchedule(MortgageCalculator mortgageCalculator, int numberOfYears) {
         int p = 1;
         NumberFormat currency = NumberFormat.getCurrencyInstance();
-//        format currency
-        String formattedMortgage = currency.format(mortgage);
-//        print result
+        //        print result
         System.out.println("PAYMENT SCHEDULE");
         System.out.println("________________");
         while (p <= numberOfYears * MONTHS_IN_A_YEAR) {
-            System.out.println(currency.format(calculateRemainingBalance(principal, annualInterestRate, numberOfYears, p)));
+            System.out.println(currency.format(mortgageCalculator.calculateRemainingBalance(p)));
             p ++;
         }
     }
@@ -61,24 +62,5 @@ public class Main {
             System.out.println("Enter a value between " + min + " and " + max);
         }
         return value;
-    }
-    public static double calculateRemainingBalance(double principal, float annualInterestRate, int numberOfYears, int currentMonth) {
-        int numberOfMonths = numberOfYears * MONTHS_IN_A_YEAR;
-        float monthlyInterestRate = (annualInterestRate / PERCENTAGE) / MONTHS_IN_A_YEAR;
-
-        return (principal * (Math.pow((1 + monthlyInterestRate), numberOfMonths) - Math.pow((1 + monthlyInterestRate), currentMonth))) / (Math.pow((1 + monthlyInterestRate), numberOfMonths) - 1);
-    }
-
-    public static double calculateMortgage(
-            int principal,
-            float annualInterestRate,
-            int numberOfYears) {
-
-        int numberOfMonths = numberOfYears * MONTHS_IN_A_YEAR;
-        float monthlyInterestRate = (annualInterestRate / PERCENTAGE) / MONTHS_IN_A_YEAR;
-        double onePlusRFactor = Math.pow((1 + monthlyInterestRate), numberOfMonths);
-
-        double mortgage = principal * ((monthlyInterestRate * onePlusRFactor)/(onePlusRFactor - 1));
-        return mortgage;
     }
 }
