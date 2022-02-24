@@ -26,14 +26,14 @@ public class Main {
 
     public static void displayPaymentSchedule(MortgageCalculator mortgageCalculator, int numberOfYears) {
         int p = 1;
+        var console = new Console();
+        String result = "PAYMENT SCHEDULE\n________________";
         NumberFormat currency = NumberFormat.getCurrencyInstance();
-        //        print result
-        System.out.println("PAYMENT SCHEDULE");
-        System.out.println("________________");
         while (p <= numberOfYears * MONTHS_IN_A_YEAR) {
-            System.out.println(currency.format(mortgageCalculator.calculateRemainingBalance(p)));
+            result = result + "\n" + currency.format(mortgageCalculator.calculateRemainingBalance(p));
             p ++;
         }
+        console.log(result);
     }
 
 
@@ -54,7 +54,7 @@ public class Main {
         double value;
         while (true) {
             System.out.print(prompt);
-            value = scanner.nextInt();
+            value = scanner.nextFloat();
 
             if (value >= min && value <= max)
                 break;
