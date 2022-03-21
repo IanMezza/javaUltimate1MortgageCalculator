@@ -1,7 +1,6 @@
 package com.ianmeza;
 
 import java.text.NumberFormat;
-import java.util.Scanner;
 
 public class Main {
     final static int MONTHS_IN_A_YEAR = 12;
@@ -12,9 +11,9 @@ public class Main {
         // TODO: 17/02/22 MortgageReport Class
 
 //        read the inputs
-        int principal = (int) readNumber("Principal ($1K - $1M): ", 1000, 1_000_000);
-        float annualInterestRate = (float) readNumber("Annual Interest Rate: ", 0, 30);
-        int numberOfYears = (int) readNumber("Period (Years): ", 0, 30);
+        int principal = (int) Console.readNumber("Principal ($1K - $1M): ", 1000, 1_000_000);
+        float annualInterestRate = (float) Console.readNumber("Annual Interest Rate: ", 0, 30);
+        int numberOfYears = (int) Console.readNumber("Period (Years): ", 0, 30);
 
         var mortgageCalculator = new MortgageCalculator(1000, 1_000_000, 0, 30, 0, 30, principal, annualInterestRate, numberOfYears);
 //        make calculation
@@ -49,18 +48,4 @@ public class Main {
         System.out.println("Monthly Payments: " + formattedMortgage);
     }
 
-    public static double readNumber(String prompt, double min, double max) {
-        Scanner scanner = new Scanner(System.in);
-        double value;
-        while (true) {
-            System.out.print(prompt);
-            value = scanner.nextFloat();
-
-            if (value >= min && value <= max)
-                break;
-
-            System.out.println("Enter a value between " + min + " and " + max);
-        }
-        return value;
-    }
 }
