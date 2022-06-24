@@ -92,25 +92,33 @@ public class MortgageCalculator {
     }
 
     private double calculateMortgage() {
-        int numberOfMonths = numberOfYears * MONTHS_IN_A_YEAR;
-        float monthlyInterestRate = (annualInterestRate / PERCENTAGE) / MONTHS_IN_A_YEAR;
+        int numberOfMonths = getNumberOfMonths();
+        float monthlyInterestRate = getMonthlyInterestRate();
         double onePlusRFactor = Math.pow((1 + monthlyInterestRate), numberOfMonths);
 
         return principal * ((monthlyInterestRate * onePlusRFactor)/(onePlusRFactor - 1));
     }
 
-    public double getMortgage() {
-        return mortgage;
-    }
 
     public void setMortgage() {
         this.mortgage = calculateMortgage();
     }
 
     public double calculateRemainingBalance(int currentMonth) {
-        int numberOfMonths = numberOfYears * MONTHS_IN_A_YEAR;
-        float monthlyInterestRate = (annualInterestRate / PERCENTAGE) / MONTHS_IN_A_YEAR;
+        int numberOfMonths = getNumberOfMonths();
+        float monthlyInterestRate = getMonthlyInterestRate();
 
         return (principal * (Math.pow((1 + monthlyInterestRate), numberOfMonths) - Math.pow((1 + monthlyInterestRate), currentMonth))) / (Math.pow((1 + monthlyInterestRate), numberOfMonths) - 1);
+    }
+    private int getNumberOfMonths() {
+        return numberOfYears * MONTHS_IN_A_YEAR;
+    }
+
+    private float getMonthlyInterestRate() {
+        return (annualInterestRate / PERCENTAGE) / MONTHS_IN_A_YEAR;
+    }
+
+    public double getMortgage() {
+        return mortgage;
     }
 }
