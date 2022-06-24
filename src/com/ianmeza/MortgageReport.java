@@ -14,6 +14,7 @@ public class MortgageReport {
     }
 
     public static void displayMortgage(double mortgage) {
+        NumberFormat currency = NumberFormat.getCurrencyInstance();
 //        format currency
         String formattedMortgage = currency.format(mortgage);
 //        print result
