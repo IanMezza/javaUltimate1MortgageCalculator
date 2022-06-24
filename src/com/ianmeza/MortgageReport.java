@@ -3,16 +3,13 @@ package com.ianmeza;
 import java.text.NumberFormat;
 
 public class MortgageReport {
-    public static void displayPaymentSchedule(MortgageCalculator mortgageCalculator, int numberOfYears) {
-        int p = 1;
+    public static void displayPaymentSchedule(MortgageCalculator mortgageCalculator) {
         var console = new Console();
-        String result = "PAYMENT SCHEDULE\n________________";
         NumberFormat currency = NumberFormat.getCurrencyInstance();
-        while (p <= numberOfYears * Main.MONTHS_IN_A_YEAR) {
-            result = result + "\n" + currency.format(mortgageCalculator.calculateRemainingBalance(p));
-            p ++;
+        console.log("PAYMENT SCHEDULE\n________________");
+        for (double balance: mortgageCalculator.getRemainingBalances()) {
+            console.log(currency.format(balance));
         }
-        console.log(result);
     }
 
     public static void displayMortgage(double mortgage) {

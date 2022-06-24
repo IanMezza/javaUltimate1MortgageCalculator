@@ -18,7 +18,7 @@ public class Main {
         double mortgage = mortgageCalculator.getMortgage();
 
         MortgageReport.displayMortgage(mortgage);
-        MortgageReport.displayPaymentSchedule(mortgageCalculator, numberOfYears);
+        MortgageReport.displayPaymentSchedule(mortgageCalculator);
     }
 
 

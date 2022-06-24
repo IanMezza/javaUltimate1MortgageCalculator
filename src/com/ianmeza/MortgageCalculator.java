@@ -1,8 +1,8 @@
 package com.ianmeza;
 
 public class MortgageCalculator {
-    final static int MONTHS_IN_A_YEAR = 12;
-    final static int PERCENTAGE = 100;
+    private final static int MONTHS_IN_A_YEAR = 12;
+    private final static int PERCENTAGE = 100;
 
     private int principalMinAllowed;
     private int principalMaxAllowed;
@@ -109,6 +109,16 @@ public class MortgageCalculator {
         float monthlyInterestRate = getMonthlyInterestRate();
 
         return (principal * (Math.pow((1 + monthlyInterestRate), numberOfMonths) - Math.pow((1 + monthlyInterestRate), currentMonth))) / (Math.pow((1 + monthlyInterestRate), numberOfMonths) - 1);
+    }
+
+    public double[] getRemainingBalances() {
+        int p = 1;
+        double[] balances = new double[getNumberOfMonths()];
+        while (p <= balances.length) {
+            balances[p -1] = calculateRemainingBalance(p);
+            p ++;
+        }
+        return balances;
     }
     private int getNumberOfMonths() {
         return numberOfYears * MONTHS_IN_A_YEAR;
