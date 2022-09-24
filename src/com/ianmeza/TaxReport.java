@@ -1,14 +1,18 @@
 package com.ianmeza;
 
 public class TaxReport {
-    private TaxCalculator2022 calculator;
 
-    public TaxReport() {
-        calculator = new TaxCalculator2022(100_000);
+    private TaxCalculator calculator;
+
+    public TaxReport(TaxCalculator calculator) {
+        this.calculator = calculator;
     }
 
     public void show() {
         var tax = calculator.calculateTax();
         System.out.println(tax);
+    }
+    public void setCalculator(TaxCalculator calculator) {
+        this.calculator = calculator;
     }
 }
